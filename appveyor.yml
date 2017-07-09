@@ -2,10 +2,6 @@ image: Visual Studio 2015
 
 build: false
 
-install:
-  - cmd: git submodule update --init --recursive
-
-
 environment:
   matrix:
     - PYTHON_VERSION: 3.4
@@ -15,6 +11,7 @@ init:
   - "echo %PYTHON_VERSION% %MINICONDA%"
 
 install:
+  - cmd: git submodule update --init --recursive
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
