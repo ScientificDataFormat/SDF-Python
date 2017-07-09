@@ -1,0 +1,4 @@
+[submodule "C/NDTable"]
+	path = C/NDTable
+	url = https://github.com/ScientificDataFormat/NDTable.git
+	branch = develop
