@@ -1,0 +1,6 @@
+image: Visual Studio 2015
+
+build: false
+
+test_script:
+  - build
