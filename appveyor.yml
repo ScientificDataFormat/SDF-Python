@@ -13,7 +13,7 @@ init:
   - "echo %PYTHON_VERSION% %MINICONDA%"
 
 install:
-  - cmd: git submodule update --init --recursive
+  - git submodule update --init --recursive
   - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
@@ -23,6 +23,7 @@ install:
   - pip install dymat
 
 test_script:
+  - python -m doctest README.rst
   - build_windows
   - pip install .
   - cd tests
