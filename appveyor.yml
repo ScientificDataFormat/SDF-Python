@@ -4,6 +4,8 @@ build: false
 
 environment:
   matrix:
+    - PYTHON_VERSION: 2.7
+      MINICONDA: C:\Miniconda
     - PYTHON_VERSION: 3.4
       MINICONDA: C:\Miniconda3
 
@@ -24,4 +26,4 @@ test_script:
   - build_windows
   - pip install .
   - cd tests
-  - python -m unittest
+  - python test_sdf.py
