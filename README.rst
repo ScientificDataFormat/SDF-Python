@@ -1,9 +1,11 @@
+.. image:: https://ci.appveyor.com/api/projects/status/github/ScientificDataFormat/SDF-Python?branch=master
+
 Scientific Data Format for Python
 =================================
 
 SDF is a Python package to read, write and interpolate multi-dimensional data.
-The Scientific Data Format is an open file format based on HDF5 to store multi-
-dimensional data such as parameters, simulations results or measurements.
+The Scientific Data Format is an open file format based on HDF5 to store
+multi-dimensional data such as parameters, simulations results or measurements.
 It supports...
 
 - very large files
@@ -27,7 +29,7 @@ or install the latest development version from source
 
 ::
 
-    $ git clone -b develop https://github.com/ScientificDataFormat/SDF-Python.git
+    $ git clone --branch develop --recursive https://github.com/ScientificDataFormat/SDF-Python.git
     $ cd SDF-Python
     $ sudo pip install .
 
