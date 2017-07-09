@@ -234,7 +234,7 @@ class Test(unittest.TestCase):
         self.assertEqual(["Scales must be strictly monotonic increasing"], errors)
 
     def test_dsres_load_all(self):
-        path, _ = os.path.split(__file__)
+        path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
 
         g = sdf.load(filename)
@@ -266,7 +266,7 @@ class Test(unittest.TestCase):
 
     def test_dsres_load_dataset(self):
 
-        path, _ = os.path.split(__file__)
+        path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
 
         ds = sdf.load(filename, objectname='/booleanPulse2/period')
@@ -292,30 +292,17 @@ class Test(unittest.TestCase):
         self.assertEqual(ds.data.dtype, np.int32)
         self.assertEqual(ds.data, 1)
 
-    # def test_excel2sdf_example(self):
-    #     path, _ = os.path.split(__file__)
-    #     filename = os.path.join(path, 'examples', 'excel2sdf.py')
-    #     runpy.run_path(filename)
-
     def test_interp_1d_example(self):
-        path, _ = os.path.split(__file__)
-        filename = os.path.join(path, 'examples', 'interp_1d.py')
-        runpy.run_path(filename)
+        runpy.run_module('sdf.examples.interp_1d')
 
     def test_interp_2d_example(self):
-        path, _ = os.path.split(__file__)
-        filename = os.path.join(path, 'examples', 'interp_2d.py')
-        runpy.run_path(filename)
+        runpy.run_module('sdf.examples.interp_2d')
 
     def test_sine_example(self):
-        path, _ = os.path.split(__file__)
-        filename = os.path.join(path, 'examples', 'sine.py')
-        runpy.run_path(filename)
+        runpy.run_module('sdf.examples.sine')
 
     def test_spline_1d_example(self):
-        path, _ = os.path.split(__file__)
-        filename = os.path.join(path, 'examples', 'spline_1d.py')
-        runpy.run_path(filename)
+        runpy.run_module('sdf.examples.spline_1d')
 
 if __name__ == "__main__":
     unittest.main()

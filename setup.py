@@ -1,11 +1,11 @@
-from distutils.core import setup
+from setuptools import setup
 
-setup(name="sdf",
+setup(name="SDF",
       version="0.3.1",
       description="Scientific Data Format",
-      url="",
-      author="",
-      author_email="",
+      url="https://github.com/ScientificDataFormat/SDF-Python",
+      author="Torsten Sommer",
+      author_email="torsten.sommer@3ds.com",
       license="Standard 3-clause BSD",
       packages=["sdf", "sdf.examples", "sdf.plot"],
       package_data={"sdf": ["examples/IntegerNetwork1.mat", "win32/ndtable.dll", "win64/ndtable.dll", "linux64/libndtable.so", "darwin64/libNDTable.dylib"]},

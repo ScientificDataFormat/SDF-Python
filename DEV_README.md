@@ -8,11 +8,11 @@ git clone --branch develop --recursive https://github.com/ScientificDataFormat/S
 
 ## Build the archive
 
-To build the binaries and distribution archive run the respective build script.
+To build the binaries and distribution archive run the respective build script for your platform.
 
-- Windows: build_windows.bat
-- Linux: build_linux.sh
-- Mac: build_mac.sh
+- build_windows.bat
+- build_linux.sh
+- build_mac.sh
 
 ## Install the package
 
@@ -20,3 +20,8 @@ To build the binaries and distribution archive run the respective build script.
 cd SDF-Python
 pip install .
 ```
+
+## Run the tests
+
+cd tests
+python -m unitests
