@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="SDF",
-      version="0.3.1",
+      version="0.3.2",
       description="Scientific Data Format",
       url="https://github.com/ScientificDataFormat/SDF-Python",
       author="Torsten Sommer",
