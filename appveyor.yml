@@ -6,4 +6,4 @@ install:
   - cmd: git submodule update --init --recursive
 
 test_script:
-  - build
+  - build_windows

@@ -1,6 +1,9 @@
 # SDF files
 *.sdf
 
+# Build artefacts
+*.o
+
 # PyCharm projects
 .idea/
 
