@@ -1,0 +1,29 @@
+image: Visual Studio 2015
+
+build: false
+
+environment:
+  matrix:
+    - PYTHON_VERSION: 2.7
+      MINICONDA: C:\Miniconda
+    - PYTHON_VERSION: 3.4
+      MINICONDA: C:\Miniconda3
+
+init:
+  - "echo %PYTHON_VERSION% %MINICONDA%"
+
+install:
+  - cmd: git submodule update --init --recursive
+  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy h5py matplotlib scipy"
+  - activate test-environment
+  - pip install dymat
+
+test_script:
+  - build_windows
+  - pip install .
+  - cd tests
+  - python test_sdf.py

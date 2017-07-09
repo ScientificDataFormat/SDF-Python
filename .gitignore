@@ -1,0 +1,63 @@
+# SDF files
+*.sdf
+
+# Build artefacts
+*.o
+
+# PyCharm projects
+.idea/
+
+# compiled code
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# data files
+*.h5
+*.mat
+
+# temp files
+~*
+
+# Eclipse user settings
+.settings/
+
+# PDFs
+*.pdf
+
+# auto generated manifest
+MANIFEST
+
+# automation scripts
+# *.bat
+
+# test file
+!IntegerNetwork1.mat
