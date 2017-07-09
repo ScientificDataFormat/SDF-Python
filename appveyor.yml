@@ -22,5 +22,6 @@ install:
 
 test_script:
   - build_windows
+  - pip install .
   - cd tests
   - python -m unittest
