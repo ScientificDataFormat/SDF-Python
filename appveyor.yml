@@ -2,5 +2,8 @@ image: Visual Studio 2015
 
 build: false
 
+install:
+  - cmd: git submodule update --init --recursive
+
 test_script:
   - build
