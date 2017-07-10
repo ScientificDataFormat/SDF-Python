@@ -75,6 +75,6 @@ Get the scale for the first dimension:
 
 |copy| 2017 Dassault Systèmes
 
-.. _SDF specification: https://github.com/ScientificDataFormat/SDF-Specification
+.. _SDF specification: https://github.com/ScientificDataFormat/SDF
 .. _HDF5: https://www.hdfgroup.org/hdf5/
 .. |copy|   unicode:: U+000A9
