@@ -59,7 +59,7 @@ Read the dataset from the SDF file asserting the correct unit of the dataset and
 
 Get the meta info and data array from the dataset:
 
-    >>> ds_v2.unit  # doctest: +ALLOW_UNICODE
+    >>> ds_v2.unit
     'V'
     >>> ds_v2.data.shape
     (51,)
@@ -67,7 +67,7 @@ Get the meta info and data array from the dataset:
 Get the scale for the first dimension:
 
     >>> ds_t2 = ds_v2.scales[0]
-    >>> ds_t2.unit  # doctest: +ALLOW_UNICODE
+    >>> ds_t2.unit
     's'
 
 
