@@ -1,30 +1,42 @@
-image: Visual Studio 2015
-
 build: false
 
 environment:
+
   matrix:
     - PYTHON_VERSION: 2.7
       MINICONDA: C:\Miniconda
-    - PYTHON_VERSION: 3.6
-      MINICONDA: C:\Miniconda3
+
+    - PYTHON_VERSION: 3.5
+      MINICONDA: C:\Miniconda35
+
+    - PYTHON_VERSION: 2.7
+      MINICONDA: C:\Miniconda-x64
+
+    - PYTHON_VERSION: 3.5
+      MINICONDA: C:\Miniconda35-x64
 
 init:
-  - "echo %PYTHON_VERSION% %MINICONDA%"
+  - echo %PYTHON_VERSION% %MINICONDA%
 
 install:
   - git submodule update --init --recursive
-  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy h5py matplotlib scipy"
-  - activate test-environment
-  - pip install dymat
+  - conda create -q -n test-env python=%PYTHON_VERSION%
+  - activate test-env
+
+  # build the wheel
+  - python setup.py bdist_wheel --universal
+
+  # install the wheel and its dependencies
+  - for %%f in (dist\SDF-*.whl) do pip install %%f
 
 test_script:
-  - python -m doctest README.rst
-  - build_windows
-  - pip install .
   - cd tests
-  - python test_sdf.py
+  - python -m unittest discover
+
+artifacts:
+  # archive the generated wheel in the build report
+  - path: dist\*

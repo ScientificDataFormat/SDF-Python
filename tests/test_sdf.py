@@ -1,23 +1,29 @@
 # Copyright (c) 2017 Dassault Systemes. All rights reserved.
 import runpy
 import unittest
+from unittest import skipIf
 import numpy as np
 import math
 import sdf
 import os
+import platform
 
 
 class Test(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        import matplotlib.pyplot as plt
 
-        def no_show():
-            pass
+        if platform.system() == 'Windows':
+            # plot tests currently only work on Windows anyways
 
-        # suppress matplotlib.pyplot.show()
-        plt.show = no_show
+            import matplotlib.pyplot as plt
+
+            def no_show():
+                pass
+
+            # suppress matplotlib.pyplot.show()
+            plt.show = no_show
 
     def assertDatasetsEqual(self, ds1, ds2):
 
@@ -292,17 +298,22 @@ class Test(unittest.TestCase):
         self.assertEqual(ds.data.dtype, np.int32)
         self.assertEqual(ds.data, 1)
 
+    @skipIf(platform.system() != 'Windows', "Test requires display")
     def test_interp_1d_example(self):
         runpy.run_module('sdf.examples.interp_1d')
 
+    @skipIf(platform.system() != 'Windows', "Test requires display")
     def test_interp_2d_example(self):
         runpy.run_module('sdf.examples.interp_2d')
 
+    @skipIf(platform.system() != 'Windows', "Test requires display")
     def test_sine_example(self):
         runpy.run_module('sdf.examples.sine')
 
+    @skipIf(platform.system() != 'Windows', "Test requires display")
     def test_spline_1d_example(self):
         runpy.run_module('sdf.examples.spline_1d')
+
 
 if __name__ == "__main__":
     unittest.main()
