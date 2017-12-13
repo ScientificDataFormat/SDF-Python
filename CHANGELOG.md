@@ -1,10 +1,9 @@
 # Changelog
 
-## [0.3.3] (unreleased)
+## [0.3.3] (2017-12-13)
 
 ### Changed
 - Distribution package changed from .tar.gz to .whl (Python Wheel)
-- DLLs are now signed
 
 ## [0.3.2] (2017-07-09)
 
