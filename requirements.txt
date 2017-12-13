@@ -2,4 +2,4 @@ h5py
 matplotlib
 numpy
 xlrd
-DyMat
+scipy

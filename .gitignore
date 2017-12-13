@@ -10,9 +10,6 @@
 # compiled code
 *.py[cod]
 
-# C extensions
-*.so
-
 # Packages
 *.egg
 *.egg-info

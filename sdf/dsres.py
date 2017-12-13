@@ -2,6 +2,12 @@
 
 import numpy as np
 from sdf import Group, Dataset
+import scipy.io
+
+# extract strings from the matrix
+strMatNormal = lambda a: [''.join(s).rstrip() for s in a]
+strMatTrans = lambda a: [''.join(s).rstrip() for s in zip(*a)]
+
 
 def _split_description(comment):
 
@@ -29,68 +35,86 @@ def _split_description(comment):
     return unit, display_unit, comment, info
 
 
-def load(filename, objectname, unit=None, scale_units=None):
+def load(filename, objectname):
+
+    g_root = _load_mat(filename)
 
     if objectname == '/':
-        return load_all(filename)
+        return g_root
     else:
-        return load_dataset(filename, objectname, unit, scale_units)
+        obj = g_root
+        segments = objectname.split('/')
+        for s in segments:
+            if s:
+                obj = obj[s]
+        return obj
 
 
-def load_dataset(filename, path, unit=None, scale_units=None):
+def _load_mat(filename):
 
-    import DyMat
+    mat = scipy.io.loadmat(filename, chars_as_strings=False)
 
-    df = DyMat.DyMatFile(filename)
+    _vars = {}
+    _blocks = []
 
-    # remove the leading slash
-    if path.startswith('/'):
-        path = path[1:]
+    try:
+        fileInfo = strMatNormal(mat['Aclass'])
+    except KeyError:
+        raise Exception('File structure not supported!')
 
-    # change to the path dot notation
-    path = path.replace('/', '.')
+    if fileInfo[1] == '1.1':
+        if fileInfo[3] == 'binTrans':
+            # usually files from OpenModelica or Dymola auto saved,
+            # all methods rely on this structure since this was the only
+            # one understand by earlier versions
+            names = strMatTrans(mat['name'])  # names
+            descr = strMatTrans(mat['description'])  # descriptions
 
-    # get the variable name
-    name = path.split('.')[-1]
+            cons = mat['data_1']
+            traj = mat['data_2']
 
-    unit, display_unit, comment, info = _split_description(df.description(path))
+            d = mat['dataInfo'][0, :]
+            x = mat['dataInfo'][1, :]
 
-    data = df.data(path)
+        elif fileInfo[3] == 'binNormal':
+            # usually files from dymola, save as...,
+            # variables are mapped to the structure above ('binTrans')
+            names = strMatNormal(mat['name'])  # names
+            descr = strMatNormal(mat['description'])  # descriptions
 
-    if 'type' in info:
-        if info['type'] == 'Integer' or 'Boolean':
-            data = np.asarray(data, dtype=np.int32)
+            cons = mat['data_1'].T
+            traj = mat['data_2'].T
 
-    if data.size == 2:
-        ds = Dataset(name, comment=comment, unit=unit, display_unit=display_unit, data=data[0])
+            d = mat['dataInfo'][:, 0]
+            x = mat['dataInfo'][:, 1]
+        else:
+            raise Exception('File structure not supported!')
+
+        c = np.abs(x) - 1  # column
+        s = np.sign(x)  # sign
+
+        vars = zip(names, descr, d, c, s)
+    elif fileInfo[1] == '1.0':
+        # files generated with dymola, save as..., only plotted ...
+        # fake the structure of a 1.1 transposed file
+        names = strMatNormal(mat['names'])  # names
+        _blocks.append(0)
+        mat['data_0'] = mat['data'].transpose()
+        del mat['data']
+        _absc = (names[0], '')
+        for i in range(1, len(names)):
+            _vars[names[i]] = ('', 0, i, 1)
     else:
-        a_data, a_name, a_description = df.abscissa(2)
-        a_unit, _, a_comment, a_info = _split_description(a_description)
+        raise Exception('File structure not supported!')
 
-        ds_time = Dataset(a_name, data=a_data, unit=a_unit, comment='Simulation time')
-
-        ds = Dataset(name, comment=comment, unit=unit, display_unit=display_unit, data=data, scales=[ds_time])
-
-    return ds
-
-
-def load_all(filename):
-
-    import DyMat
-
+    # build the SDF tree
     g_root = Group('/')
 
-    df = DyMat.DyMatFile(filename)
+    ds_time = None
 
-    data, name, description = df.abscissa(2)
-    unit, display_unit, comment, info = _split_description(description)
+    for name, desc, d, c, s in vars:
 
-    ds_time = Dataset(name, data=data, unit=unit, comment='Simulation time')
-    g_root.datasets.append(ds_time)
-
-    for name in df.names():
-
-        unit, display_unit, comment, info = _split_description(df.description(name))
+        unit, display_unit, comment, info = _split_description(desc)
 
         path = name.split('.')
 
@@ -105,14 +129,20 @@ def load_all(filename):
                 g_parent = g_child
             pass
 
-        data = df.data(name)
+        if d == 1:
+            data = cons[c, 0]
+        else:
+            data = traj[c, :]
 
         if 'type' in info:
             if info['type'] == 'Integer' or 'Boolean':
                 data = np.asarray(data, dtype=np.int32)
 
-        if data.size == 2:
-            ds = Dataset(path[-1], comment=comment, unit=unit, display_unit=display_unit, data=data[0])
+        if d == 0:
+            ds = Dataset(path[-1], comment="Simulation time", unit=unit, display_unit=display_unit, data=data)
+            ds_time = ds
+        elif d == 1:
+            ds = Dataset(path[-1], comment=comment, unit=unit, display_unit=display_unit, data=data)
         else:
             ds = Dataset(path[-1], comment=comment, unit=unit, display_unit=display_unit, data=data, scales=[ds_time])
 
