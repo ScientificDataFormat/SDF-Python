@@ -298,6 +298,12 @@ class Test(unittest.TestCase):
         self.assertEqual(ds.data.dtype, np.int32)
         self.assertEqual(ds.data, 1)
 
+    def test_dsres_inverted_signals(self):
+        path = os.path.dirname(__file__)
+        filename = os.path.join(path, 'DoublePendulum.mat')
+        rvisobj = sdf.load(filename, '/world/y_label/cylinders[2]/rvisobj[1]')
+        self.assertTrue(rvisobj.data < 0)
+
     @skipIf(platform.system() != 'Windows', "Test requires display")
     def test_interp_1d_example(self):
         runpy.run_module('sdf.examples.interp_1d')

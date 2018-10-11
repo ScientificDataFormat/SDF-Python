@@ -130,9 +130,9 @@ def _load_mat(filename):
             pass
 
         if d == 1:
-            data = cons[c, 0]
+            data = cons[c, 0] * s
         else:
-            data = traj[c, :]
+            data = traj[c, :] * s
 
         if 'type' in info:
             if info['type'] == 'Integer' or 'Boolean':
