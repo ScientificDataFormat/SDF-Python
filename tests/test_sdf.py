@@ -247,13 +247,12 @@ class Test(unittest.TestCase):
 
         s = g['Time']
         self.assertEqual(s.data.size, 552)
-        self.assertEqual(s.data.dtype, np.float32)
+        self.assertEqual(s.data.dtype, np.dtype(np.float32))
         self.assertEqual(s.unit, 's')
         self.assertEqual(s.comment, 'Simulation time')
 
         ds = g['booleanPulse2']['period']
         self.assertEqual(ds.data, 2.0)
-        self.assertEqual(ds.data.dtype, np.float32)
         self.assertEqual(ds.unit, 's')
         self.assertEqual(ds.comment, 'Time for one period')
 
@@ -278,24 +277,23 @@ class Test(unittest.TestCase):
         ds = sdf.load(filename, objectname='/booleanPulse2/period')
 
         self.assertEqual(ds.data, 2.0)
-        self.assertEqual(ds.data.dtype, np.float32)
         self.assertEqual(ds.unit, 's')
         self.assertEqual(ds.comment, 'Time for one period')
 
         ds = sdf.load(filename, objectname='/booleanPulse2/y')
-        self.assertEqual(ds.data.dtype, np.int32)
+        self.assertEqual(ds.data.dtype, np.dtype(np.int32))
         self.assertEqual(ds.data.size, 552)
         self.assertEqual(ds.data[0], True)
         self.assertEqual(ds.data[93], False)
 
         s = ds.scales[0]
         self.assertEqual(s.data.size, 552)
-        self.assertEqual(s.data.dtype, np.float32)
+        self.assertEqual(s.data.dtype, np.dtype(np.float32))
         self.assertEqual(s.unit, 's')
         self.assertEqual(s.comment, 'Simulation time')
 
         ds = sdf.load(filename, objectname='/integerConstant/k')
-        self.assertEqual(ds.data.dtype, np.int32)
+        self.assertEqual(ds.data.dtype, np.dtype(np.int32))
         self.assertEqual(ds.data, 1)
 
     def test_dsres_inverted_signals(self):
