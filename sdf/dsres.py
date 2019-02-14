@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Dassault Systemes. All rights reserved.
+# Copyright (c) 2019 Dassault Systemes. All rights reserved.
 
 import numpy as np
 from sdf import Group, Dataset
@@ -130,9 +130,9 @@ def _load_mat(filename):
             pass
 
         if d == 1:
-            data = cons[c, 0]
+            data = cons[c, 0] * s
         else:
-            data = traj[c, :]
+            data = traj[c, :] * s
 
         if 'type' in info:
             if info['type'] == 'Integer' or 'Boolean':

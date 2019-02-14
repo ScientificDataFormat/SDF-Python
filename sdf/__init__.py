@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Dassault Systemes. All rights reserved.
+# Copyright (c) 2019 Dassault Systemes. All rights reserved.
 
 import numpy as np
 from .units import convert_unit
@@ -7,7 +7,7 @@ from copy import copy
 
 from . import hdf5
 
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 _object_name_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_]*')
 
