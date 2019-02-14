@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Dassault Systemes. All rights reserved.
+# Copyright (c) 2019 Dassault Systemes. All rights reserved.
 
 import numpy as np
 from .units import convert_unit
