@@ -72,7 +72,7 @@ Get the scale for the first dimension:
 
 -----------------------------
 
-|copyright| 2017 |Dassault Systemes|
+|copyright| 2019 |Dassault Systemes|
 
 .. _SDF specification: https://github.com/ScientificDataFormat/SDF
 .. _HDF5: https://www.hdfgroup.org/hdf5/

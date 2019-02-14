@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Dassault Systemes. All rights reserved.
+# Copyright (c) 2019 Dassault Systemes. All rights reserved.
 
 from ctypes import c_double, c_void_p, c_int, byref, cdll
 import numpy as np
