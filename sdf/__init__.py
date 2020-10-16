@@ -7,7 +7,7 @@ from copy import copy
 
 from . import hdf5
 
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 
 _object_name_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_]*')
 
@@ -157,10 +157,11 @@ def _validate_group(group, is_root=False):
 
 
 def _validate_dataset(ds):
+
     if not type(ds.data) is np.ndarray:
         return ['Dataset.data must be a numpy.ndarray']
 
-    elif np.alen(ds.data) < 1:
+    elif ds.data.size < 1:
         return ['Dataset.data must not be empty']
 
     elif not np.issubdtype(ds.data.dtype, np.float64):

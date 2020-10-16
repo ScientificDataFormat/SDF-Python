@@ -62,7 +62,7 @@ def save(filename, group):
                     dimname = s._display_name
                     if dimname is None:
                         dimname = ''
-                    h5ds.dims.create_scale(h5s, _str(dimname))
+                    h5s.make_scale(_str(dimname))
                     h5ds.dims[i].attach_scale(h5s)
                 else:
                     print("Cannot attach scale for '" + h5ds.name +
@@ -101,7 +101,7 @@ def _create_dataset(dsobj, datasets):
     """ Create a dataset from an h5py dataset """
 
     _, name = os.path.split(dsobj.name)
-    ds = sdf.Dataset(name, data=dsobj.value)
+    ds = sdf.Dataset(name, data=dsobj[()])
 
     for attr in dsobj.attrs:
         if attr == 'COMMENT':
