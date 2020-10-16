@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.5 (2020-10-16)
+
+Don't use library depricated functions (#3)
+
 ## v0.3.4 (2019-02-14)
 
 Apply sign when reading time series from Dymola result files (.mat)
