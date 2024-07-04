@@ -20,14 +20,14 @@ methods = ['akima', 'fritsch-butland', 'steffen']
 
 figure, axes = plt.subplots(len(methods), sharex=True)
 
-figure.canvas.set_window_title('Spline based interpolation methods')
+figure.canvas.manager.set_window_title('Spline based interpolation methods')
 figure.set_facecolor('white')
 
 for ax, method in zip(axes, methods):
     yi = table.evaluate((xi,), interp=method, extrap='linear')
     dyi = table.evaluate_derivative((xi,), (dxi,), interp=method, extrap='linear')
     ax.set_title(method)
-    ax.grid(b=True, which='both', color='0.9', linestyle='-', zorder=0)
+    ax.grid(visible=True, which='both', color='0.9', linestyle='-', zorder=0)
     ax.plot(x, y, 'or', label='samples', zorder=300)
     ax.plot(xi, yi, 'b', label='interpolated', zorder=100)
     ax.plot(xi, dyi, 'r', label='derivative', zorder=100)
