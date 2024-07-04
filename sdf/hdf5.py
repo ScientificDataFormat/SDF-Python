@@ -150,7 +150,7 @@ def _str(s):
         return s
     else:
         # convert the string to an fixed-length utf-8 byte string
-        return np.string_(s.encode('utf-8'))
+        return np.bytes_(s.encode('utf-8'))
 
 
 def _write_group(f, g, path, datasets):
