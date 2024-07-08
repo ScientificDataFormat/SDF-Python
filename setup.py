@@ -25,4 +25,4 @@ setup(name='SDF',
                             'linux64/libndtable.so',
                             'darwin64/libNDTable.dylib']},
       platforms=['darwin64', 'linux64', 'win32', 'win64'],
-      install_requires=['numpy', 'h5py', 'matplotlib', 'scipy'])
+      install_requires=['numpy', 'h5py', 'matplotlib>=3.6', 'scipy'])

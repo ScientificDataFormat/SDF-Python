@@ -18,14 +18,14 @@ methods = [('hold', 'hold'), ('nearest', 'hold'), ('linear', 'linear'), ('akima'
 
 figure, axes = plt.subplots(len(methods), sharex=True)
 
-figure.canvas.set_window_title('Inter- and Extrapolation Methods')
+figure.canvas.manager.set_window_title('Inter- and Extrapolation Methods')
 figure.set_facecolor('white')
 
 for ax, method in zip(axes, methods):
     yi = table.evaluate((xi,), interp=method[0], extrap=method[1])
     dyi = table.evaluate_derivative((xi,), (dxi,), interp=method[0], extrap=method[1])
     ax.set_title("interp='%s', extrap='%s'" % method)
-    ax.grid(b=True, which='both', color='0.9', linestyle='-', zorder=0)
+    ax.grid(visible=True, which='both', color='0.9', linestyle='-', zorder=0)
     ax.plot(x, y, 'or', label='samples', zorder=300)
     ax.plot(xi, yi, 'b', label='interpolated', zorder=100)
     ax.plot(xi, dyi, 'r', label='derivative', zorder=100)

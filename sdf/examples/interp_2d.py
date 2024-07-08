@@ -21,7 +21,7 @@ xi = yi = np.linspace(-6, 6, 200)
 XI, YI = np.meshgrid(xi, yi, indexing='ij')
 
 figure, axes = plt.subplots(ncols=2, nrows=2, sharex=True, sharey=True)
-figure.canvas.set_window_title('Inter- & Extrapolation Methods')
+figure.canvas.manager.set_window_title('Inter- & Extrapolation Methods')
 figure.set_facecolor('white')
 
 axes = axes.flatten()
@@ -31,7 +31,7 @@ ax.set_title('original')
 im = NonUniformImage(ax)
 im.set_data(x, y, Z)
 im.set_extent((-3, 3, -3, 3))
-ax.images.append(im)
+ax.add_image(im)
 ax.set_xlim([-6, 6])
 ax.set_ylim([-6, 6])
 
@@ -43,7 +43,7 @@ for ax, method in zip(axes[1:], methods):
     im = NonUniformImage(ax)
     im.set_data(xi, yi, ZI)
     im.set_extent((-6, 6, -6, 6))
-    ax.images.append(im)
+    ax.add_image(im)
 
 figure.tight_layout()
 plt.show()
