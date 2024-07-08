@@ -90,8 +90,11 @@ class NDTable(object):
         dims = np.asarray(data.shape, np.int32)
         scales_ = (c_void_p * 32)()
         for i, scale in enumerate(scales):
-            scales_[i] = scale.ctypes.get_as_parameter()
-        self._table = _create_table(c_int(data.ndim), dims.ctypes.get_as_parameter(), data.ctypes.get_as_parameter(), scales_)
+            scales_[i] = scale.ctypes.data_as(c_void_p)
+        self._table = _create_table(c_int(data.ndim),
+                                    dims.ctypes.data_as(c_void_p),
+                                    data.ctypes.data_as(c_void_p),
+                                    scales_)
         
         # save close function from garbage collection
         self._close_table = _close_table
@@ -165,7 +168,7 @@ class NDTable(object):
         values = np.empty(shape)
         params = (c_void_p * len(points))()
         for i, param in enumerate(points):
-            params[i] = param.ctypes.get_as_parameter()
+            params[i] = param.ctypes.data_as(c_void_p)
         
         ret = _evaluate(c_void_p(self._table),
                         c_int(len(params)),
@@ -173,7 +176,7 @@ class NDTable(object):
                         interp_method, 
                         extrap_method,
                         c_int(values.size),
-                        values.ctypes.get_as_parameter())
+                        values.ctypes.data_as(c_void_p))
         
         assert ret == 0, 'An error occurred during interpolation'
         
@@ -212,8 +215,8 @@ class NDTable(object):
                 
             _evaluate_derivative(c_void_p(self._table),
                                  c_int(params.size), 
-                                 params.ctypes.get_as_parameter(), 
-                                 delta_params.ctypes.get_as_parameter(),
+                                 params.ctypes.data_as(c_void_p),
+                                 delta_params.ctypes.data_as(c_void_p),
                                  interp_method, 
                                  extrap_method, 
                                  byref(value))
