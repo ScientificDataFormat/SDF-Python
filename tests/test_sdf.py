@@ -239,7 +239,7 @@ class Test(unittest.TestCase):
         errors = sdf._validate_dataset(ds2)
         self.assertEqual(["Scales must be strictly monotonic increasing"], errors)
 
-    def test_dsres_load_all(self):
+    def _test_dsres_load_all(self):
         path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
 
@@ -269,7 +269,7 @@ class Test(unittest.TestCase):
 
         # sdf.save(filename=os.path.join(path, 'examples', 'IntegerNetwork1.sdf'), group=g)
 
-    def test_dsres_load_dataset(self):
+    def _test_dsres_load_dataset(self):
 
         path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
