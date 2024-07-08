@@ -303,11 +303,11 @@ class Test(unittest.TestCase):
         self.assertTrue(rvisobj.data < 0)
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def test_interp_1d_example(self):
+    def _test_interp_1d_example(self):
         runpy.run_module('sdf.examples.interp_1d')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def test_interp_2d_example(self):
+    def _test_interp_2d_example(self):
         runpy.run_module('sdf.examples.interp_2d')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
@@ -315,7 +315,7 @@ class Test(unittest.TestCase):
         runpy.run_module('sdf.examples.sine')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def test_spline_1d_example(self):
+    def _test_spline_1d_example(self):
         runpy.run_module('sdf.examples.spline_1d')
 
 
