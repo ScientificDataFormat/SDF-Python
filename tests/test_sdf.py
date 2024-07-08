@@ -239,7 +239,7 @@ class Test(unittest.TestCase):
         errors = sdf._validate_dataset(ds2)
         self.assertEqual(["Scales must be strictly monotonic increasing"], errors)
 
-    def _test_dsres_load_all(self):
+    def test_dsres_load_all(self):
         path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
 
@@ -269,7 +269,7 @@ class Test(unittest.TestCase):
 
         # sdf.save(filename=os.path.join(path, 'examples', 'IntegerNetwork1.sdf'), group=g)
 
-    def _test_dsres_load_dataset(self):
+    def test_dsres_load_dataset(self):
 
         path, _ = os.path.split(sdf.__file__)
         filename = os.path.join(path, 'examples', 'IntegerNetwork1.mat')
@@ -303,11 +303,11 @@ class Test(unittest.TestCase):
         self.assertTrue(rvisobj.data < 0)
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def _test_interp_1d_example(self):
+    def test_interp_1d_example(self):
         runpy.run_module('sdf.examples.interp_1d')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def _test_interp_2d_example(self):
+    def test_interp_2d_example(self):
         runpy.run_module('sdf.examples.interp_2d')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
@@ -315,7 +315,7 @@ class Test(unittest.TestCase):
         runpy.run_module('sdf.examples.sine')
 
     @skipIf(platform.system() != 'Windows', "Test requires display")
-    def _test_spline_1d_example(self):
+    def test_spline_1d_example(self):
         runpy.run_module('sdf.examples.spline_1d')
 
 
