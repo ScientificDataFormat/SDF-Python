@@ -21,7 +21,6 @@ def plot_time_series(filename, datasets):
     figure, axes = plt.subplots(len(datasets), sharex=True)
 
     # figure = plt.figure()
-    figure.canvas.set_window_title(filename)
     figure.patch.set_facecolor('white')
 
     for ax, path in zip(axes, datasets):

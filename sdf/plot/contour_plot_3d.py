@@ -27,7 +27,6 @@ def create_plot(filename, datasets):
     pylab.rcParams.update(params)
 
     figure = plt.figure(figsize=(12, 8))
-    figure.canvas.set_window_title(filename)
     figure.patch.set_facecolor('white')
 
     nrows = len(datasets)
@@ -84,6 +83,7 @@ def create_plot(filename, datasets):
     plt.tight_layout()
 
     plt.show()
+
 
 if __name__ == '__main__':
 
