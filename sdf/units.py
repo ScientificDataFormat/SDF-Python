@@ -1,5 +1,3 @@
-# Copyright (c) 2019 Dassault Systemes. All rights reserved.
-
 import math
 
 
