@@ -1,6 +1,3 @@
-.. image:: https://ci.appveyor.com/api/projects/status/github/ScientificDataFormat/SDF-Python?branch=master
-
-
 Scientific Data Format for Python
 =================================
 
@@ -26,7 +23,7 @@ To install the latest release from `PyPI <https://pypi.python.org/pypi/sdf/>`_ o
 
 To install the latest development version::
 
-    python -m pip install --upgrade https://github.com/ScientificDataFormat/SDF-Python/archive/develop.zip
+    python -m pip install --upgrade https://github.com/ScientificDataFormat/SDF-Python/archive/main.zip
 
 
 Tutorial
@@ -72,7 +69,7 @@ Get the scale for the first dimension:
 
 -----------------------------
 
-|copyright| 2020 |Dassault Systemes|
+|copyright| 2024 |Dassault Systemes|
 
 .. _SDF specification: https://github.com/ScientificDataFormat/SDF
 .. _HDF5: https://www.hdfgroup.org/hdf5/
