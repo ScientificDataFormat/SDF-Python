@@ -11,7 +11,7 @@ def readme():
 
 
 setup(name='SDF',
-      version='0.3.5',
+      version='0.3.6',
       description="Work with Scientific Data Format files in Python",
       long_description=readme(),
       url="https://github.com/ScientificDataFormat/SDF-Python",
