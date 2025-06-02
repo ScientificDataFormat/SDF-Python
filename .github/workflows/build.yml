@@ -83,8 +83,7 @@ jobs:
             image: macos-13
     runs-on: ${{ matrix.image }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - uses: astral-sh/setup-uv@v4
     - uses: actions/download-artifact@v4
       with:
@@ -93,12 +92,16 @@ jobs:
       run: |
         uv venv
         .venv\Scripts\activate
+        uv pip install pytest
         $files = Get-ChildItem "sdf-*-py3-none-any.whl"
         foreach ($f in $files) {
           uv pip install $f.FullName
         }
+        uv run pytest
     - if: matrix.name != 'x86_64-windows'
       run: |
         uv venv
         source .venv/bin/activate
+        uv pip install pytest
         uv pip install sdf-*-py3-none-any.whl
+        uv run pytest
