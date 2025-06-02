@@ -97,5 +97,5 @@ jobs:
     - if: matrix.name != 'x86_64-windows'
       run: |
         uv venv
-        source .venv\Scripts\activate
+        source .venv/bin/activate
         uv pip install sdf-*-py3-none-any.whl
