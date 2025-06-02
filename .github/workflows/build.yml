@@ -8,7 +8,6 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
     strategy:
       matrix:
@@ -29,27 +28,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-    - name: Query Python executable
-      run: which python
-    - name: Install dependencies
-      run: python -m pip install h5py matplotlib numpy pytest scipy setuptools wheel
-    - name: Build Python Wheel
-      run: python setup.py bdist_wheel
-    - name: Install Python Wheel
-      shell: bash
+    - name: Build NDTable
       run: |
-        for f in dist/SDF-*-py3-none-any.whl; do
-          python -m pip install $f --no-deps -vv
-        done
-    - name: Run Python tests
-      run: pytest tests
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+        cmake -S C -B C/${{ matrix.name }}
+        cmake --build C/${{ matrix.name }} --target install
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}
-        path: dist/*.whl
+        path: src/sdf/ndtable/${{ matrix.name }}
         if-no-files-found: error
