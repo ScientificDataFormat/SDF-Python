@@ -43,4 +43,4 @@ target_include_directories(NDTable PRIVATE
 	"NDTable/include"
 )
 
-install(TARGETS NDTable DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../src/sdf/${PLATFORM}")
+install(TARGETS NDTable DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../src/sdf/ndtable/${PLATFORM}")

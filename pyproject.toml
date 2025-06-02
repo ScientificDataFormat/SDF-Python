@@ -22,8 +22,8 @@ build-backend = "hatchling.build"
 "src/sdf/ndtable/x86_64-linux/libNDTable.so" = "sdf/ndtable/x86_64-linux/libNDTable.so"
 "src/sdf/ndtable/x86-windows/NDTable.dll" = "sdf/ndtable/x86-windows/NDTable.dll"
 "src/sdf/ndtable/x86_64-windows/NDTable.dll" = "sdf/ndtable/x86_64-windows/NDTable.dll"
-"src/sdf/examples/IntegerNetwork1.mat" = "sdf/ndtable/IntegerNetwork1.mat"
-"src/sdf/examples/time_series.xlsx" = "sdf/ndtable/time_series.xlsx"
+"src/sdf/examples/IntegerNetwork1.mat" = "sdf/examples/IntegerNetwork1.mat"
+"src/sdf/examples/time_series.xlsx" = "sdf/examples/time_series.xlsx"
 
 [dependency-groups]
 dev = [
