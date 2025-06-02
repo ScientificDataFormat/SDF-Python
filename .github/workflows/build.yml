@@ -24,7 +24,7 @@ jobs:
           - name: x86_64-darwin
             image: macos-13
             cmake-args: -D CMAKE_OSX_ARCHITECTURES=x86_64 -D ARCHITECTURE=x86_64
-          - name: aarch-darwin
+          - name: aarch64-darwin
             image: macos-13
             cmake-args: -D CMAKE_OSX_ARCHITECTURES=arm64 -D ARCHITECTURE=aarch64
     runs-on: ${{ matrix.image }}
