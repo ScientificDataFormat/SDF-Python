@@ -19,7 +19,7 @@ jobs:
             image: windows-2022
             arch: x86_64
           - name: x86_64-linux
-            image: ubuntu-20.04
+            image: ubuntu-22.04
             arch: x86_64
           - name: x86_64-darwin
             image: macos-12
