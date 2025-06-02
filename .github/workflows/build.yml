@@ -91,7 +91,7 @@ jobs:
         name: dist
     - if: matrix.name == 'x86_64-windows'
       run: |
-        uv venv
+        uv venv --python 3.10
         .venv\Scripts\activate
         uv pip install pytest
         $files = Get-ChildItem "sdf-*-py3-none-any.whl"
@@ -101,7 +101,7 @@ jobs:
         uv run pytest
     - if: matrix.name != 'x86_64-windows'
       run: |
-        uv venv
+        uv venv --python 3.10
         source .venv/bin/activate
         uv pip install pytest
         uv pip install sdf-*-py3-none-any.whl
