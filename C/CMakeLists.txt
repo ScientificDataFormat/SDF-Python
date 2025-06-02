@@ -31,16 +31,16 @@ endif ()
 message(STATUS "PLATFORM: ${PLATFORM}")
 
 add_library(NDTable SHARED
-    "include/Python.h"
-    "src/Python.c"
-    "NDTable/include/NDTable.h"
-    "NDTable/src/Core.c"
-    "NDTable/src/Interpolation.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/Python.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Python.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/NDTable/include/NDTable.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/NDTable/src/Core.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/NDTable/src/Interpolation.c"
 )
 
 target_include_directories(NDTable PRIVATE
-	"include"
-	"NDTable/include"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include"
+	"${CMAKE_CURRENT_SOURCE_DIR}/NDTable/include"
 )
 
 install(TARGETS NDTable DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/../src/sdf/${PLATFORM}")
