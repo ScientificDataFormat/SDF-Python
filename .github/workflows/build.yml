@@ -93,7 +93,10 @@ jobs:
       run: |
         uv venv
         .venv\Scripts\activate
-        for %i in (sdf-*-py3-none-any.whl) do uv pip install %i
+        $files = Get-ChildItem "sdf-*-py3-none-any.whl"
+        foreach ($f in $files) {
+          uv pip install $f.FullName
+        }
     - if: matrix.name != 'x86_64-windows'
       run: |
         uv venv
