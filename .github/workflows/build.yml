@@ -8,22 +8,25 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-binaries:
     strategy:
       matrix:
         include:
           - name: x86-windows
             image: windows-2022
-            arch: x86
+            cmake-args: -A Win32 -D ARCHITECTURE=x86
           - name: x86_64-windows
             image: windows-2022
-            arch: x86_64
+            cmake-args: -A x64 -D ARCHITECTURE=x86_64
           - name: x86_64-linux
             image: ubuntu-22.04
-            arch: x86_64
+            cmake-args: -D ARCHITECTURE=x86_64
           - name: x86_64-darwin
-            image: macos-12
-            arch: x86_64
+            image: macos-13
+            cmake-args: -D CMAKE_OSX_ARCHITECTURES=x86_64 -D ARCHITECTURE=x86_64
+          - name: aarch-darwin
+            image: macos-13
+            cmake-args: -D CMAKE_OSX_ARCHITECTURES=arm64 -D ARCHITECTURE=aarch64
     runs-on: ${{ matrix.image }}
     steps:
     - name: Checkout repository
@@ -39,3 +42,19 @@ jobs:
         name: ${{ matrix.name }}
         path: src/sdf/ndtable/${{ matrix.name }}
         if-no-files-found: error
+  build-wheel:
+    runs-on: ubuntu-22.04
+    needs: [build-binaries]
+    steps:
+    - uses: astral-sh/setup-uv@v4
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        name: x86-windows
+        path: src/sdf/ndtable/x86-windows
+    - run: uv build --wheel
+    - uses: actions/upload-artifact@v4
+      with:
+       name: dist
+       path: dist
+       if-no-files-found: error
