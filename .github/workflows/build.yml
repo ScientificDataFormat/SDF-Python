@@ -84,6 +84,7 @@ jobs:
     runs-on: ${{ matrix.image }}
     steps:
     - uses: actions/checkout@v4
+    - run: rm pyproject.toml
     - uses: astral-sh/setup-uv@v4
     - uses: actions/download-artifact@v4
       with:
