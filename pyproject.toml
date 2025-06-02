@@ -1,0 +1,32 @@
+[project]
+name = "SDF"
+version = "0.3.6"
+description = "Work with Scientific Data Format files in Python"
+readme = "README.rst"
+requires-python = ">=3.10"
+dependencies = [
+    "h5py>=3.13.0",
+    "matplotlib>=3.10.3",
+    "numpy>=2.2.6",
+    "scipy>=1.15.3",
+    "xlrd>=2.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/sdf/ndtable/aarch64-darwin/libNDTable.dylib" = "sdf/ndtable/aarch64-darwin/libNDTable.dylib"
+"src/sdf/ndtable/aarch64-linux/libNDTable.so" = "sdf/ndtable/aarch64-linux/libNDTable.so"
+"src/sdf/ndtable/x86_64-darwin/libNDTable.dylib" = "sdf/ndtable/x86_64-darwin/libNDTable.dylib"
+"src/sdf/ndtable/x86_64-linux/libNDTable.so" = "sdf/ndtable/x86_64-linux/libNDTable.so"
+"src/sdf/ndtable/x86-windows/NDTable.dll" = "sdf/ndtable/x86-windows/NDTable.dll"
+"src/sdf/ndtable/x86_64-windows/NDTable.dll" = "sdf/ndtable/x86_64-windows/NDTable.dll"
+"src/sdf/examples/IntegerNetwork1.mat" = "sdf/ndtable/IntegerNetwork1.mat"
+"src/sdf/examples/time_series.xlsx" = "sdf/ndtable/time_series.xlsx"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+]
