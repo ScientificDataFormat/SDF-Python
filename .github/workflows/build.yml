@@ -35,7 +35,7 @@ jobs:
         submodules: true
     - name: Build NDTable
       run: |
-        cmake -S C -B C/${{ matrix.name }}
+        cmake -S C -B C/${{ matrix.name }} ${{ cmake-args }}
         cmake --build C/${{ matrix.name }} --target install
     - uses: actions/upload-artifact@v4
       with:
