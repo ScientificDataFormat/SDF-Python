@@ -68,3 +68,34 @@ jobs:
        name: dist
        path: dist
        if-no-files-found: error
+  run-tests:
+    needs: [ build-wheel ]
+    strategy:
+      matrix:
+        include:
+          - name: x86_64-linux
+            image: ubuntu-22.04
+          - name: x86_64-windows
+            image: windows-2022
+          - name: x86_64-darwin
+            image: macos-13
+          - name: aarch64-darwin
+            image: macos-13
+    runs-on: ${{ matrix.image }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v4
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist
+    - if: matrix.name == 'x86_64-windows'
+      run: |
+        uv venv
+        .venv\Scripts\activate
+        for %i in (sdf-*-py3-none-any.whl) do uv pip install %i
+    - if: matrix.name != 'x86_64-windows'
+      run: |
+        uv venv
+        source .venv\Scripts\activate
+        uv pip install sdf-*-py3-none-any.whl
