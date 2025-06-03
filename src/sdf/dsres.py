@@ -1,15 +1,19 @@
+from os import PathLike
+
 import numpy as np
 from sdf import Group, Dataset
 import scipy.io
 
+
 # extract strings from the matrix
 def strMatNormal(a):
     return [''.join(s).rstrip() for s in a]
+
 def strMatTrans(a):
     return [''.join(s).rstrip() for s in zip(*a)]
 
 
-def _split_description(comment):
+def _split_description(comment: str) -> tuple[str | None, str | None, str | None, dict[str, str]]:
 
     unit = None
     display_unit = None
@@ -35,7 +39,7 @@ def _split_description(comment):
     return unit, display_unit, comment, info
 
 
-def load(filename, objectname):
+def load(filename: str | PathLike, objectname: str) -> Dataset | Group:
 
     g_root = _load_mat(filename)
 
@@ -50,7 +54,7 @@ def load(filename, objectname):
         return obj
 
 
-def _load_mat(filename):
+def _load_mat(filename: str) -> Group:
 
     mat = scipy.io.loadmat(filename, chars_as_strings=False)
 

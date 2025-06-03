@@ -201,7 +201,7 @@ class Test(unittest.TestCase):
     def test_validate_group(self):
         g = sdf.Group('8')    
         errors = sdf._validate_group(g, is_root=False)
-        self.assertEqual(["Object names must only contain letters, digits and underscores (\"_\") and must start with a letter"], errors)
+        self.assertEqual(["Object names must only contain letters, digits, and underscores (\"_\") and must start with a letter."], errors)
         
         g.name = 'G1'
         errors = sdf._validate_group(g, is_root=False)

@@ -1,7 +1,9 @@
+from __future__ import annotations
+from os import PathLike
 import numpy as np
 from .units import convert_unit
 import re
-from copy import copy
+from attrs import define, field
 
 from . import hdf5
 
@@ -10,15 +12,15 @@ __version__ = '0.3.6'
 _object_name_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_]*')
 
 
-class Group(object):
+@define(eq=False)
+class Group:
     """ SDF Group """
 
-    def __init__(self, name, comment=None, attributes=dict(), groups=[], datasets=[]):
-        self.name = name
-        self.comment = comment
-        self.attributes = copy(attributes)
-        self.groups = copy(groups)
-        self.datasets = copy(datasets)
+    name: str = None
+    comment: str = None
+    attributes: dict[str, str] = field(factory=dict)
+    groups: list[Group] = field(factory=list)
+    datasets: list[Dataset] = field(factory=list)
 
     def __contains__(self, key):
         for obj in self.datasets + self.groups:
@@ -36,34 +38,21 @@ class Group(object):
         for obj in self.groups + self.datasets:
             yield obj
 
-    def __repr__(self):
-        return '<SDF Group "' + self.name + '": [' + ', '.join(map(lambda obj: obj.name, self)) + ']>'
 
-
-class Dataset(object):
+@define(eq=False)
+class Dataset:
     """ SDF Dataset """
 
-    def __init__(self, name,
-                 comment=None,
-                 attributes=dict(),
-                 data=np.empty(0),
-                 display_name=None,
-                 relative_quantity=False,
-                 unit=None,
-                 display_unit=None,
-                 is_scale=False,
-                 scales=[]
-                 ):
-        self.name = name
-        self.comment = comment
-        self.attributes = copy(attributes)
-        self.data = data
-        self._display_name = display_name
-        self.relative_quantity = relative_quantity
-        self.unit = unit
-        self._display_unit = display_unit
-        self.is_scale = is_scale
-        self.scales = scales
+    name: str = None
+    comment: str = None
+    attributes: dict[str, str] = field(factory=dict)
+    data: np.typing.NDArray = None
+    _display_name: str = None
+    relative_quantity: bool = False
+    unit: str = None
+    _display_unit: str = None
+    is_scale: bool = False
+    scales: list[Dataset] = field(factory=list)
 
     @property
     def display_data(self):
@@ -89,12 +78,6 @@ class Dataset(object):
     def display_unit(self, value):
         self._display_unit = value
 
-    def validate(self):
-        if self.display_unit and not self.unit:
-            return 'ERROR', 'display_unit was set but no unit'
-
-        return 'OK'
-
     # some shorthand aliases
     @property
     def d(self):
@@ -102,59 +85,39 @@ class Dataset(object):
 
     dd = display_data
 
-    def __repr__(self):
-        text = '<SDF Dataset "' + self.name + '": '
 
-        if not isinstance(self.data, np.ndarray) or len(self.data.shape) == 0:
-            text += str(self.data)
-        elif len(self.data.shape) == 1 and len(self.data) <= 10:
-            text += str(self.data)
-        else:
-            text += '<' + 'x'.join(map(str, self.data.shape)) + '>'
-
-        if self.unit is not None:
-            text += ' ' + self.unit
-
-        if any(self.scales):
-            text += ' w.r.t. ' + ', '.join(map(lambda s: s.name if s is not None else 'None', self.scales))
-
-        text += '>'
-
-        return text
-
-
-def validate(obj):
+def validate(obj: Group | Dataset) -> list[str]:
     """ Validate an sdf.Group or sdf.Dataset """
 
-    errors = []
+    problems = []
 
     if isinstance(obj, Group):
-        errors += _validate_group(obj, is_root=True)
+        problems += _validate_group(obj, is_root=True)
     elif isinstance(obj, Dataset):
-        errors += _validate_dataset(obj)
+        problems += _validate_dataset(obj)
     else:
-        errors.append('Unknown object type: %s' % type(obj))
+        problems.append(f"Unknown object type: {type(obj)}")
 
-    return errors
+    return problems
 
 
 def _validate_group(group, is_root=False):
-    errors = []
+
+    problems = []
 
     if not is_root and not _object_name_pattern.match(group.name):
-        errors += [
-            "Object names must only contain letters, digits and underscores (\"_\") and must start with a letter"]
+        problems.append("Object names must only contain letters, digits, and underscores (\"_\") and must start with a letter.")
 
     for child_group in group.groups:
-        errors += _validate_dataset(child_group)
+        problems += _validate_dataset(child_group)
 
     for ds in group.datasets:
-        errors += _validate_dataset(ds)
+        problems += _validate_dataset(ds)
 
-    return errors
+    return problems
 
 
-def _validate_dataset(ds):
+def _validate_dataset(ds: Dataset) -> list[str]:
 
     if type(ds.data) is not np.ndarray:
         return ['Dataset.data must be a numpy.ndarray']
@@ -177,10 +140,8 @@ def _validate_dataset(ds):
     return []
 
 
-def load(filename, objectname='/', unit=None, scale_units=None):
-    """ Load a dataset or group from an SDF file """
-
-    obj = None
+def load(filename: str | PathLike, objectname: str = '/', unit: str = None, scale_units: list[str] = None) -> Dataset | Group:
+    """ Load a Dataset or Group from an SDF file """
 
     if filename.endswith('.mat'):
         from . import dsres
@@ -212,7 +173,7 @@ def load(filename, objectname='/', unit=None, scale_units=None):
     return obj
 
 
-def save(filename, group):
+def save(filename: str | PathLike, group: Group):
     """ Save an SDF group to a file """
 
     hdf5.save(filename, group)

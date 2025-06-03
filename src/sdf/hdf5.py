@@ -1,3 +1,4 @@
+from __future__ import annotations
 import h5py
 import sdf
 import numpy as np
@@ -14,7 +15,7 @@ def _to_python_str(s):
         return s
 
 
-def load(filename, objectname):
+def load(filename: str | os.PathLike, objectname: str) -> sdf.Dataset | sdf.Group:
 
     with h5py.File(filename, 'r') as f:
 
@@ -43,7 +44,7 @@ def load(filename, objectname):
             raise Exception('Unexpected object')
 
 
-def save(filename, group):
+def save(filename: str | os.PathLike, group: sdf.Group) -> None:
 
     with h5py.File(filename, 'w') as f:
 
