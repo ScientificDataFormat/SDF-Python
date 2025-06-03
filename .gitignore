@@ -7,6 +7,12 @@
 # Python artifacts
 __pycache__
 
+# native binaries
+*.dll
+*.dylib
+*.lib
+*.so
+
 # build artifacts
 C/aarch64-*/
 C/x86-*/
