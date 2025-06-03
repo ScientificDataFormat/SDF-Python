@@ -8,7 +8,15 @@ on:
     branches: [ main ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/ruff-action@v3
+    - run: ruff check
+    - run: ruff format --check --diff
   build-binaries:
+    needs: [ lint ]
     strategy:
       matrix:
         include:
