@@ -7,7 +7,7 @@ from attrs import define, field
 
 from . import hdf5
 
-__version__ = "0.3.6"
+__version__ = "0.3.7"
 
 _object_name_pattern = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
 
