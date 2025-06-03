@@ -6,14 +6,13 @@ import matplotlib.pylab as pylab
 
 
 def plot_time_series(filename, datasets):
-
     params = {
         # 'legend.fontsize': 'medium',
-        'figure.figsize': (10, 8),
-        'axes.labelsize': 'small',
+        "figure.figsize": (10, 8),
+        "axes.labelsize": "small",
         #   'axes.titlesize': 'medium',
-        'xtick.labelsize': 'small',
-        'ytick.labelsize': 'small'
+        "xtick.labelsize": "small",
+        "ytick.labelsize": "small",
     }
 
     pylab.rcParams.update(params)
@@ -21,10 +20,9 @@ def plot_time_series(filename, datasets):
     figure, axes = plt.subplots(len(datasets), sharex=True)
 
     # figure = plt.figure()
-    figure.patch.set_facecolor('white')
+    figure.patch.set_facecolor("white")
 
     for ax, path in zip(axes, datasets):
-
         dataset = sdf.load(filename, path)
 
         scale = dataset.scales[0]
@@ -34,9 +32,9 @@ def plot_time_series(filename, datasets):
 
         # ax = figure.add_subplot(len(datasets), 1, i + 1)
 
-        ax.plot(x, y, 'b')
+        ax.plot(x, y, "b")
 
-        ax.grid(b=True, which='both', color='0.8', linestyle='-')
+        ax.grid(b=True, which="both", color="0.8", linestyle="-")
 
         ax.set_xlim([np.nanmin(x), np.nanmax(x)])
         ylabel = path
@@ -51,7 +49,7 @@ def plot_time_series(filename, datasets):
         if scale.unit is not None:
             xlabel += " / %s" % scale.unit
         else:
-            xlabel = 'Index'
+            xlabel = "Index"
         ax.set_xlabel(xlabel)
 
     figure.tight_layout()
@@ -59,12 +57,12 @@ def plot_time_series(filename, datasets):
     plt.show()
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     try:
         plot_time_series(filename=sys.argv[1], datasets=sys.argv[2:])
     except:
         import traceback
+
         traceback.print_exc()
         input("Press Enter to continue...")
         exit(1)

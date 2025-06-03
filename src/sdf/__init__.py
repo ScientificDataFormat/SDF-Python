@@ -7,14 +7,14 @@ from attrs import define, field
 
 from . import hdf5
 
-__version__ = '0.3.6'
+__version__ = "0.3.6"
 
-_object_name_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_]*')
+_object_name_pattern = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
 
 
 @define(eq=False)
 class Group:
-    """ SDF Group """
+    """SDF Group"""
 
     name: str = None
     comment: str = None
@@ -41,7 +41,7 @@ class Group:
 
 @define(eq=False)
 class Dataset:
-    """ SDF Dataset """
+    """SDF Dataset"""
 
     name: str = None
     comment: str = None
@@ -87,7 +87,7 @@ class Dataset:
 
 
 def validate(obj: Group | Dataset) -> list[str]:
-    """ Validate an sdf.Group or sdf.Dataset """
+    """Validate an sdf.Group or sdf.Dataset"""
 
     problems = []
 
@@ -102,11 +102,12 @@ def validate(obj: Group | Dataset) -> list[str]:
 
 
 def _validate_group(group, is_root=False):
-
     problems = []
 
     if not is_root and not _object_name_pattern.match(group.name):
-        problems.append("Object names must only contain letters, digits, and underscores (\"_\") and must start with a letter.")
+        problems.append(
+            'Object names must only contain letters, digits, and underscores ("_") and must start with a letter.'
+        )
 
     for child_group in group.groups:
         problems += _validate_dataset(child_group)
@@ -118,62 +119,79 @@ def _validate_group(group, is_root=False):
 
 
 def _validate_dataset(ds: Dataset) -> list[str]:
-
     if type(ds.data) is not np.ndarray:
-        return ['Dataset.data must be a numpy.ndarray']
+        return ["Dataset.data must be a numpy.ndarray"]
 
     elif ds.data.size < 1:
-        return ['Dataset.data must not be empty']
+        return ["Dataset.data must not be empty"]
 
     elif not np.issubdtype(ds.data.dtype, np.float64):
-        return ['Dataset.data.dtype must be numpy.float64']
+        return ["Dataset.data.dtype must be numpy.float64"]
 
     if ds.is_scale:
         if len(ds.data.shape) != 1:
-            return ['Scales must be one-dimensional']
+            return ["Scales must be one-dimensional"]
         if np.any(np.diff(ds.data) <= 0):
-            return ['Scales must be strictly monotonic increasing']
+            return ["Scales must be strictly monotonic increasing"]
     else:
-        if (len(ds.data.shape) >= 1) and (ds.data.shape[0] > 0) and not (len(ds.data.shape) == len(ds.scales)):
-            return ['The number of scales does not match the number of dimensions']
+        if (
+            (len(ds.data.shape) >= 1)
+            and (ds.data.shape[0] > 0)
+            and not (len(ds.data.shape) == len(ds.scales))
+        ):
+            return ["The number of scales does not match the number of dimensions"]
 
     return []
 
 
-def load(filename: str | PathLike, objectname: str = '/', unit: str = None, scale_units: list[str] = None) -> Dataset | Group:
-    """ Load a Dataset or Group from an SDF file """
+def load(
+    filename: str | PathLike,
+    objectname: str = "/",
+    unit: str = None,
+    scale_units: list[str] = None,
+) -> Dataset | Group:
+    """Load a Dataset or Group from an SDF file"""
 
-    if filename.endswith('.mat'):
+    if filename.endswith(".mat"):
         from . import dsres
+
         obj = dsres.load(filename, objectname)
     else:
         obj = hdf5.load(filename, objectname)
 
     if isinstance(obj, Dataset):
-
         # check the unit
         if unit is not None and unit != obj.unit:
-            raise Exception("Dataset '%s' has the wrong unit. Expected '%s' but was '%s'." % (obj.name, unit, obj.unit))
+            raise Exception(
+                "Dataset '%s' has the wrong unit. Expected '%s' but was '%s'."
+                % (obj.name, unit, obj.unit)
+            )
 
         # check the number of the scale units
         if scale_units is not None:
-
             if len(scale_units) != obj.data.ndim:
-                raise Exception("The number of scale units must be equal to the number of dimensions. " +
-                                "Dataset '%s' has %d dimension(s) but %d scale units where given."
-                                % (obj.name, obj.data.ndim, len(scale_units)))
+                raise Exception(
+                    "The number of scale units must be equal to the number of dimensions. "
+                    + "Dataset '%s' has %d dimension(s) but %d scale units where given."
+                    % (obj.name, obj.data.ndim, len(scale_units))
+                )
 
             # check the scale units
             for i, scale_unit in enumerate(scale_units):
                 scale = obj.scales[i]
                 if scale.unit != scale_unit:
-                    raise Exception(("The scale for dimension %d of '%s' has the wrong unit. " +
-                                    "Expected '%s' but was '%s'.") % (i + 1, obj.name, scale_unit, scale.unit))
+                    raise Exception(
+                        (
+                            "The scale for dimension %d of '%s' has the wrong unit. "
+                            + "Expected '%s' but was '%s'."
+                        )
+                        % (i + 1, obj.name, scale_unit, scale.unit)
+                    )
 
     return obj
 
 
 def save(filename: str | PathLike, group: Group):
-    """ Save an SDF group to a file """
+    """Save an SDF group to a file"""
 
     hdf5.save(filename, group)

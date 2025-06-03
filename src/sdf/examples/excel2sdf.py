@@ -9,11 +9,11 @@ import sdf
 
 
 # name of the Excel file to import
-filename = 'time_series.xlsx'
+filename = "time_series.xlsx"
 
 # open the workbook
 book = xlrd.open_workbook(filename)
-    
+
 # get the first sheet
 sh = book.sheet_by_index(0)
 
@@ -33,14 +33,14 @@ t = array(col_t)
 u = array(col_u)
 
 # create the datasets
-ds_t = sdf.Dataset(n_t, data=t, unit=u_t, is_scale=True, display_name='Time')
+ds_t = sdf.Dataset(n_t, data=t, unit=u_t, is_scale=True, display_name="Time")
 ds_u = sdf.Dataset(n_u, data=u, unit=u_u, scales=[ds_t])
 
 # create the root group
-g = sdf.Group('/', comment='Imported from ' + filename, datasets=[ds_t, ds_u])
+g = sdf.Group("/", comment="Imported from " + filename, datasets=[ds_t, ds_u])
 
 # change the file extension
-outfile = os.path.splitext(filename)[0] + '.sdf'
+outfile = os.path.splitext(filename)[0] + ".sdf"
 
 # write the SDF file
 sdf.save(outfile, g)

@@ -25,11 +25,11 @@ subs[1] = slice(None)
 
 Z = dataset.data[subs].T
 
-X, Y = np.meshgrid(x, y, indexing='ij')
+X, Y = np.meshgrid(x, y, indexing="ij")
 
 figure = plt.figure()
 
-figure.patch.set_facecolor('white')
+figure.patch.set_facecolor("white")
 
 ax = figure.add_subplot(1, 1, 1)
 
@@ -39,9 +39,9 @@ CS = plt.contourf(X, Y, Z, 10, cmap=plt.cm.viridis)
 
 cbar = figure.colorbar(CS)
 
-CS = plt.contour(X, Y, Z, 10, colors='k')
+CS = plt.contour(X, Y, Z, 10, colors="k")
 
-plt.clabel(CS=CS,  fontsize=9, inline=1, colors='k')
+plt.clabel(CS=CS, fontsize=9, inline=1, colors="k")
 
 ax.set_title(dataset.display_name + " / " + dataset.unit)
 ax.set_xlabel(dataset.scales[1].display_name + " / " + dataset.scales[1].unit)
