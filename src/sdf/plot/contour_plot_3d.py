@@ -2,13 +2,10 @@
 Create a contour plot from an SDF dataset
 """
 
-import traceback
-
 import numpy as np
 import sdf
 import matplotlib.pyplot as plt
 from matplotlib import colors
-import sys
 
 import matplotlib.pylab as pylab
 
@@ -98,9 +95,11 @@ def create_plot(filename, datasets):
 
 
 if __name__ == "__main__":
-    try:
-        create_plot(filename=sys.argv[1], datasets=sys.argv[2:])
-    except:
-        traceback.print_exc()
-        input("Press Enter to continue...")
-        exit(1)
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename")
+    parser.add_argument("datasets", nargs="+")
+    args = parser.parse_args()
+
+    create_plot(filename=args.filename, datasets=args.datasets)

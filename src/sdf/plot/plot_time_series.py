@@ -1,5 +1,4 @@
 import sdf
-import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.pylab as pylab
@@ -58,11 +57,11 @@ def plot_time_series(filename, datasets):
 
 
 if __name__ == "__main__":
-    try:
-        plot_time_series(filename=sys.argv[1], datasets=sys.argv[2:])
-    except:
-        import traceback
+    import argparse
 
-        traceback.print_exc()
-        input("Press Enter to continue...")
-        exit(1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename")
+    parser.add_argument("datasets", nargs="+")
+    args = parser.parse_args()
+
+    plot_time_series(filename=args.filename, datasets=args.datasets)
