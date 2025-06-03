@@ -1,9 +1,7 @@
-Scientific Data Format for Python
-=================================
+# Scientific Data Format for Python
 
 SDF is a Python package to read, write and interpolate multi-dimensional data.
-The Scientific Data Format is an open file format based on HDF5_ to store
-multi-dimensional data such as parameters, simulation results or measurements.
+The Scientific Data Format is an open file format based on [HDF5](https://www.hdfgroup.org/hdf5/) to store multi-dimensional data such as parameters, simulation results or measurements.
 It supports...
 
 - very large files
@@ -11,20 +9,13 @@ It supports...
 - hierarchical structure
 - units, comments and custom meta-information
 
-For detailed information see the `SDF specification`_.
+For detailed information see the [SDF specification](https://github.com/ScientificDataFormat/SDF).
 
+## Installation
 
-Installation
-------------
-
-To install the latest release from `PyPI <https://pypi.python.org/pypi/sdf/>`_ or update an existing installation::
+To install the latest release from [PyPI](https://pypi.python.org/pypi/sdf/) or update an existing installation:
 
     python -m pip install --upgrade sdf
-
-To install the latest development version::
-
-    python -m pip install --upgrade https://github.com/ScientificDataFormat/SDF-Python/archive/main.zip
-
 
 Tutorial
 --------
@@ -66,12 +57,12 @@ Get the scale for the first dimension:
     >>> ds_t2.unit
     's'
 
+## License
 
------------------------------
+The code is released under the [2-Clause BSD license](LICENSE).
 
-Copyright |copyright| 2024 |Dassault Systemes|
+---
 
-.. _SDF specification: https://github.com/ScientificDataFormat/SDF
-.. _HDF5: https://www.hdfgroup.org/hdf5/
-.. |copyright|   unicode:: U+000A9
-.. |Dassault Systemes| unicode:: Dassault U+0020 Syst U+00E8 mes
+<p align="center">
+    <a href="https://3ds.com/"><img src="https://github.com/user-attachments/assets/b5bf4274-633f-4a1b-aa03-e84828a686b7"/></a>
+</p>
