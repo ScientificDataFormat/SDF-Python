@@ -29,8 +29,6 @@ def create_plot(filename, datasets):
     figure = plt.figure(figsize=(12, 8))
     figure.patch.set_facecolor('white')
 
-    nrows = len(datasets)
-
     for row, dataset in enumerate(datasets):
 
         # load the datasets
@@ -78,7 +76,7 @@ def create_plot(filename, datasets):
             ax.set_title(scale3.display_name + "=" + ("%g" % scale3.data[i]) + " " + scale3.unit)
             ax.set_xlabel(C1.scales[1].display_name + " / " + C1.scales[1].unit)
 
-        cbar = figure.colorbar(CSF)
+        figure.colorbar(CSF)
 
     plt.tight_layout()
 

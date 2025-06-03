@@ -3,8 +3,10 @@ from sdf import Group, Dataset
 import scipy.io
 
 # extract strings from the matrix
-strMatNormal = lambda a: [''.join(s).rstrip() for s in a]
-strMatTrans = lambda a: [''.join(s).rstrip() for s in zip(*a)]
+def strMatNormal(a):
+    return [''.join(s).rstrip() for s in a]
+def strMatTrans(a):
+    return [''.join(s).rstrip() for s in zip(*a)]
 
 
 def _split_description(comment):

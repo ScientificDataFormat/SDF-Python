@@ -132,7 +132,7 @@ class Test(unittest.TestCase):
         sdf.save('roundtrip.sdf', g)
         
         # load the group from the file        
-        g2 = sdf.load('roundtrip.sdf', '/')
+        sdf.load('roundtrip.sdf', '/')
          
         # TODO: compare the objects
         #self.assertEqual(pickle.dumps(g), pickle.dumps(g2))
