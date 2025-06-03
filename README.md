@@ -1,3 +1,5 @@
+![sdf-logo](https://github.com/user-attachments/assets/34cbddc5-b599-40d4-9278-a86302d04689)
+
 # Scientific Data Format for Python
 
 SDF is a Python package to read, write and interpolate multi-dimensional data.
