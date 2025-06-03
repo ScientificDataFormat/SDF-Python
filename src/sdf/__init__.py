@@ -156,7 +156,7 @@ def _validate_group(group, is_root=False):
 
 def _validate_dataset(ds):
 
-    if not type(ds.data) is np.ndarray:
+    if type(ds.data) is not np.ndarray:
         return ['Dataset.data must be a numpy.ndarray']
 
     elif ds.data.size < 1:

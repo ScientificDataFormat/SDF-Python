@@ -1,5 +1,4 @@
 import sdf
-from sdf.plot.plot_time_series import plot_time_series
 import matplotlib.pyplot as plt
 
 
