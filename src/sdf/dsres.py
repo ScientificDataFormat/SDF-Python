@@ -147,6 +147,7 @@ def _load_mat(filename: str) -> Group:
                 unit=unit,
                 display_unit=display_unit,
                 data=data,
+                is_scale=True
             )
             ds_time = ds
         elif d == 1:
