@@ -1,6 +1,6 @@
 [project]
 name = "SDF"
-version = "0.3.7"
+version = "0.3.8"
 description = "Work with Scientific Data Format files in Python"
 readme = "README.md"
 requires-python = ">=3.10"
